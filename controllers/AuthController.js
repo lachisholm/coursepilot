@@ -1,44 +1,67 @@
-const Course = require("../models/Course");
+const User = require("../models/User");
 
-// Dashboard
-exports.getDashboard = async (req, res) => {
-  try {
-    const courses = await Course.find({ user: req.session.userId });
-
-    res.render("pages/dashboard", { courses });
-  } catch (error) {
-    console.error(error);
-    res.render("pages/500");
-  }
+// Show Register Page
+exports.getRegister = (req, res) => {
+  res.render("pages/register");
 };
 
-// Create course
-exports.createCourse = async (req, res) => {
+// Handle Register
+exports.postRegister = async (req, res) => {
   try {
-    const { title, instructor, semester, description } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
-    await Course.create({
-      title,
-      instructor,
-      semester,
-      description,
-      user: req.session.userId,
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.send("User already exists");
+    }
+
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password
     });
 
+    req.session.userId = user._id;
     res.redirect("/dashboard");
+
   } catch (error) {
     console.error(error);
     res.render("pages/500");
   }
 };
 
-// Delete course
-exports.deleteCourse = async (req, res) => {
+// Show Login Page
+exports.getLogin = (req, res) => {
+  res.render("pages/login");
+};
+
+// Handle Login
+exports.postLogin = async (req, res) => {
   try {
-    await Course.findByIdAndDelete(req.params.id);
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.send("Invalid credentials");
+    }
+
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) {
+      return res.send("Invalid credentials");
+    }
+
+    req.session.userId = user._id;
     res.redirect("/dashboard");
+
   } catch (error) {
     console.error(error);
     res.render("pages/500");
   }
+};
+
+// Logout
+exports.logout = (req, res) => {
+  req.session.destroy();
+  res.redirect("/");
 };
