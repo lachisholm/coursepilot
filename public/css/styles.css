@@ -1,0 +1,28 @@
+/* CoursePilot Custom Theme */
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+  background-color: #1f3a63 !important;
+}
+
+.btn-primary {
+  background-color: #4f80e1;
+  border-color: #4f80e1;
+}
+
+.btn-primary:hover {
+  background-color: #3f6fcc;
+  border-color: #3f6fcc;
+}
+
+.hero-section {
+  padding: 80px 0;
+}
+
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
