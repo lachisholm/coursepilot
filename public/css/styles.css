@@ -97,3 +97,100 @@ hr {
   height: 1px;
   background: #e5e7eb;
 }
+
+/* ---------- NAVIGATION ---------- */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.nav-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #111827;
+}
+
+.nav-links a {
+  margin-left: 20px;
+}
+
+/* ---------- HERO SECTION ---------- */
+
+.hero {
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  font-size: 36px;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+/* ---------- COURSE CARDS ---------- */
+
+.course-card {
+  background: #f9fafb;
+  padding: 18px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.course-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.course-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.course-meta {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* ---------- BUTTON VARIANTS ---------- */
+
+.btn-secondary {
+  background: #e5e7eb;
+  color: #111827;
+  margin-right: 8px;
+}
+
+.btn-secondary:hover {
+  background: #d1d5db;
+}
+
+.btn-danger {
+  background: #dc2626;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}
+
+/* ---------- EMPTY STATE ---------- */
+
+.empty-state {
+  margin-top: 20px;
+  text-align: center;
+  color: #6b7280;
+  font-style: italic;
+}
