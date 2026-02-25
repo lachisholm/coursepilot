@@ -2,27 +2,22 @@
 <html>
 <head>
   <title>Login | CoursePilot</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <h1>Login</h1>
+  <div class="container">
+    <h1>Login</h1>
 
-  <form action="/login" method="POST">
-    <div>
-      <label>Email</label>
-      <input type="email" name="email" required />
-    </div>
+    <form action="/login" method="POST">
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
 
-    <div>
-      <label>Password</label>
-      <input type="password" name="password" required />
-    </div>
-
-    <button type="submit">Login</button>
-  </form>
-
-  <p>
-    Need an account?
-    <a href="/register">Register</a>
-  </p>
+    <p>
+      Need an account?
+      <a href="/register">Register</a>
+    </p>
+  </div>
 </body>
 </html>
