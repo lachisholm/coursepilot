@@ -1,86 +1,58 @@
-// server.js
 require("dotenv").config();
 
-const path = require("path");
 const express = require("express");
 const session = require("express-session");
+const mongoose = require("mongoose");
 
 const connectDB = require("./config/db");
 
+const AuthRoutes = require("./routes/AuthRoutes");
+const CourseRoutes = require("./routes/CourseRoutes");
+
 const app = express();
 
-connectDB(); // Initialize database connection
+// Connect Database
+connectDB();
 
-// =========================
-// App Configuration
-// =========================
-const PORT = process.env.PORT || 3000;
-
-// =========================
-// View Engine (EJS)
-// =========================
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-
-// =========================
 // Middleware
-// =========================
-app.use(express.urlencoded({ extended: false })); // for form posts
-app.use(express.json()); // for JSON payloads
-app.use(express.static(path.join(__dirname, "public"))); // static assets
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-// Sessions (required for login/auth)
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "coursepilot_dev_secret_change_me",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      httpOnly: true
-      // secure: true, // enable only when using HTTPS in production
-    }
   })
 );
 
-// =========================
-// Routes (temporary placeholder for now)
-// =========================
+app.use(express.static("public"));
+
+// View Engine
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
+
+// Routes
+app.use(AuthRoutes);
+app.use(CourseRoutes);
+
 app.get("/", (req, res) => {
-  res.status(200).render("pages/home", {
-    title: "CoursePilot",
-    user: req.session.user || null
-  });
+  res.render("pages/home");
 });
 
-// Health check (useful for debugging)
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
-});
-
-// =========================
-// 404 Handler
-// =========================
+// 404
 app.use((req, res) => {
-  res.status(404).render("pages/404", {
-    title: "Not Found",
-    user: req.session.user || null
-  });
+  res.status(404).render("pages/404");
 });
 
-// =========================
-// Global Error Handler
-// =========================
+// 500
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).render("pages/500", {
-    title: "Server Error",
-    user: req.session.user || null
-  });
+  console.error(err.stack);
+  res.status(500).render("pages/500");
 });
 
-// =========================
-// Start Server
-// =========================
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`CoursePilot running at http://localhost:${PORT}`);
 });
